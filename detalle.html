@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Detalle de Ciudad</title>
+  <!-- Bootstrap CSS por CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Header con Navbar -->
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">Weather Frontend M2</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link active" href="detalle.html">Detalle</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Acerca de</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main con detalle de ciudad -->
+  <main class="container my-4">
+    <h2 id="ciudad" class="mb-3"></h2>
+    <p><strong>Temperatura:</strong> <span id="temp"></span></p>
+    <p><strong>Humedad:</strong> <span id="humedad"></span></p>
+    <p><strong>Viento:</strong> <span id="viento"></span></p>
+
+    <h3 class="mt-4">Pronóstico semanal</h3>
+    <div id="pronostico" class="row"></div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-light text-center p-3">
+    <small>Proyecto Weather Frontend M2 - Clima de Ciudades Icónicas © 2026</small>
+  </footer>
+
+  <!-- Bootstrap JS por CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Script JS -->
+  <script>
+    // Obtener parámetro de ciudad desde la URL
+    const params = new URLSearchParams(window.location.search);
+    const city = params.get("city");
+
+    // Datos de ejemplo (puedes ampliar con más ciudades)
+    const data = {
+      Paris: {
+        temp: "18°C",
+        humedad: "55%",
+        viento: "12 km/h",
+        pronostico: [
+          { dia: "Lunes", estado: "Soleado", temp: "19°C" },
+          { dia: "Martes", estado: "Nublado", temp: "17°C" },
+          { dia: "Miércoles", estado: "Lluvia ligera", temp: "16°C" },
+          { dia: "Jueves", estado: "Soleado", temp: "20°C" },
+          { dia: "Viernes", estado: "Parcialmente nublado", temp: "18°C" },
+          { dia: "Sábado", estado: "Lluvia", temp: "15°C" },
+          { dia: "Domingo", estado: "Soleado", temp: "21°C" }
+        ]
+      },
+      NewYork: {
+        temp: "12°C",
+        humedad: "65%",
+        viento: "20 km/h",
+        pronostico: [
+          { dia: "Lunes", estado: "Nublado", temp: "13°C" },
+          { dia: "Martes", estado: "Lluvia", temp: "11°C" },
+          { dia: "Miércoles", estado: "Soleado", temp: "14°C" },
+          { dia: "Jueves", estado: "Parcialmente nublado", temp: "12°C" },
+          { dia: "Viernes", estado: "Lluvia ligera", temp: "10°C" },
+          { dia: "Sábado", estado: "Soleado", temp: "15°C" },
+          { dia: "Domingo", estado: "Nublado", temp: "13°C" }
+        ]
+      },
+      tokio: {
+        temp: "13°C",
+        humedad: "31%",
+        viento: "14 km/h",
+        pronostico: [
+          { dia: "Lunes", estado: "Nublado", temp: "13°C" },
+          { dia: "Martes", estado: "Lluvia", temp: "11°C" },
+          { dia: "Miércoles", estado: "Soleado", temp: "14°C" },
+          { dia: "Jueves", estado: "Parcialmente nublado", temp: "12°C" },
+          { dia: "Viernes", estado: "Lluvia ligera", temp: "10°C" },
+          { dia: "Sábado", estado: "Soleado", temp: "15°C" },
+          { dia: "Domingo", estado: "Nublado", temp: "13°C" }
+        ]
+      },
+      
+      Roma: {
+          temp: "11°C",
+        humedad: "93%",
+        viento: "03 km/h",
+        pronostico: [
+          { dia: "Lunes", estado: "Nublado", temp: "13°C" },
+          { dia: "Martes", estado: "Lluvia", temp: "11°C" },
+          { dia: "Miércoles", estado: "Soleado", temp: "14°C" },
+          { dia: "Jueves", estado: "Parcialmente nublado", temp: "12°C" },
+          { dia: "Viernes", estado: "Lluvia ligera", temp: "10°C" },
+          { dia: "Sábado", estado: "Soleado", temp: "15°C" },
+          { dia: "Domingo", estado: "Nublado", temp: "13°C" }
+        ]
+      },
+
+      Rio_de_Janeiro: {
+        temp: "25°C",
+        humedad: "82%",
+        viento: "10 km/h",
+        pronostico: [
+          { dia: "Lunes", estado: "Nublado", temp: "13°C" },
+          { dia: "Martes", estado: "Lluvia", temp: "11°C" },
+          { dia: "Miércoles", estado: "Soleado", temp: "14°C" },
+          { dia: "Jueves", estado: "Parcialmente nublado", temp: "12°C" },
+          { dia: "Viernes", estado: "Lluvia ligera", temp: "10°C" },
+          { dia: "Sábado", estado: "Soleado", temp: "15°C" },
+          { dia: "Domingo", estado: "Nublado", temp: "13°C" }
+        ]
+
+      },
+
+Sidney: {
+
+    temp: "22°C",
+        humedad: "71%",
+        viento: "08 km/h",
+        pronostico: [
+          { dia: "Lunes", estado: "Nublado", temp: "13°C" },
+          { dia: "Martes", estado: "Lluvia", temp: "11°C" },
+          { dia: "Miércoles", estado: "Soleado", temp: "14°C" },
+          { dia: "Jueves", estado: "Parcialmente nublado", temp: "12°C" },
+          { dia: "Viernes", estado: "Lluvia ligera", temp: "10°C" },
+          { dia: "Sábado", estado: "Soleado", temp: "15°C" },
+          { dia: "Domingo", estado: "Nublado", temp: "13°C" }
+        ]
+
+}
+
+      
+
+      // Agrega más ciudades icónicas aquí...
+    };
+
+
+
+    
+    // Renderizar datos en la página
+    if (city && data[city]) {
+      document.getElementById("ciudad").textContent = city;
+      document.getElementById("temp").textContent = data[city].temp;
+      document.getElementById("humedad").textContent = data[city].humedad;
+      document.getElementById("viento").textContent = data[city].viento;
+
+      const pronosticoDiv = document.getElementById("pronostico");
+      data[city].pronostico.forEach(dia => {
+        const card = document.createElement("div");
+        card.className = "col-md-3 col-sm-6 mb-3";
+        card.innerHTML = `
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">${dia.dia}</h5>
+              <p class="card-text">${dia.estado}</p>
+              <span class="badge bg-primary">${dia.temp}</span>
+            </div>
+          </div>
+        `;
+        pronosticoDiv.appendChild(card);
+      });
+    } else {
+      document.getElementById("ciudad").textContent = "Ciudad no encontrada";
+    }
+  </script>
+</body>
+</html>
